@@ -1,0 +1,37 @@
+{
+    "name": "virtual-dom-nodes",
+    "version": "0.0.1",
+    "description": "",
+    "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "author": "Ari Perkkio <ari.perkkio@gmail.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/AriPerkkio/virtual-dom-nodes",
+    "bugs": "https://github.com/AriPerkkio/virtual-dom-nodes",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AriPerkkio/virtual-dom-nodes"
+    },
+    "scripts": {
+        "lint": "eslint . --max-warnings 0 --ext .js,.ts,.tsx"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.12.0",
+        "@typescript-eslint/parser": "^5.12.0",
+        "eslint": "^8.9.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-jest-dom": "^4.0.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "typescript": "^4.5.5"
+    },
+    "prettier": {
+        "arrowParens": "avoid",
+        "semi": true,
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "tabWidth": 4,
+        "printWidth": 80
+    }
+}
