@@ -1,1 +1,2 @@
-export * from './virtual-dom-nodes';
+export * from './html-to-element';
+export * from './update';

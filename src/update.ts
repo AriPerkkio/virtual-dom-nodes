@@ -1,9 +1,24 @@
+import { isElement, isTextNode } from './dom-node-safe-guards';
+import { htmlToElement } from './html-to-element';
+
 interface Attribute {
     key: string;
     value: string;
 }
 
-export function update(current: Node, next: Node): void {
+/**
+ * Apply changes of `Node` or HTML string to given `Node` optimally.
+ */
+export function update(current: Node, nextNodeOrHtml: Node | string): void {
+    const nextNode =
+        typeof nextNodeOrHtml === 'string'
+            ? htmlToElement(nextNodeOrHtml)
+            : nextNodeOrHtml;
+
+    return updateNode(current, nextNode);
+}
+
+function updateNode(current: Node, next: Node): void {
     if (shouldUpdateWholeNode(current, next)) {
         // No need to traverse children
         return updateWholeNode(current, next);
@@ -14,6 +29,8 @@ export function update(current: Node, next: Node): void {
     );
     const childrenToRemove: Node[] = [];
 
+    // TODO: If order of nodes changes they are currently completely re-created.
+    // This could be optimized to preserve nodes and respect their order.
     current.childNodes.forEach((currentChild, index) => {
         const nextChild = next.childNodes[index];
 
@@ -22,7 +39,7 @@ export function update(current: Node, next: Node): void {
         }
 
         if (currentChild.hasChildNodes() || nextChild.hasChildNodes()) {
-            update(currentChild, nextChild);
+            updateNode(currentChild, nextChild);
         }
 
         if (isTextNode(currentChild) && isTextNode(nextChild)) {
@@ -32,14 +49,10 @@ export function update(current: Node, next: Node): void {
         }
     });
 
-    for (const child of childrenToRemove) {
-        current.removeChild(child);
-    }
+    childrenToRemove.forEach(current.removeChild.bind(current));
+    childrenToAdd.forEach(current.appendChild.bind(current));
 
-    for (const child of childrenToAdd) {
-        current.appendChild(child);
-    }
-
+    // Update attributes
     if (isElement(current)) {
         const currentAttributes = getAttributes(current);
         const nextAttributes = getAttributes(next);
@@ -64,37 +77,32 @@ export function update(current: Node, next: Node): void {
     }
 }
 
-function isElement(node: Node | null): node is Element {
-    return node != null && node.nodeType === Node.ELEMENT_NODE;
-}
-
-function isTextNode(node: Node | null): node is Text {
-    return node != null && node.nodeType === Node.TEXT_NODE;
-}
-
 function getAttributes(node: Node): Attribute[] {
     if (!isElement(node)) return [];
 
     return node
         .getAttributeNames()
-        .reduce(
+        .reduce<Attribute[]>(
             (all, key) => [
                 ...all,
                 { key, value: node.getAttribute(key) || '' },
             ],
-            [] as Attribute[]
+            []
         );
 }
 
 function shouldUpdateWholeNode(current: Node, next: Node): boolean {
+    // Node type has changed, e.g. Element -> TextNode
     if (current.nodeType !== next.nodeType) {
         return true;
     }
 
+    // Node type has changed, e.g. <div> -> <span>
     if (isElement(current) && isElement(next)) {
         return current.tagName !== next.tagName;
     }
 
+    // At this point both nodes at TextNodes
     return current.textContent !== next.textContent;
 }
 
