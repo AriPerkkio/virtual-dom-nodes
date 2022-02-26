@@ -1,4 +1,4 @@
-import { isElement } from './dom-node-safe-guards';
+import { isElement } from './dom-node-safe-guards.js';
 
 /**
  * Create `Element` from HTML string

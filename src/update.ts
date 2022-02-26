@@ -1,5 +1,5 @@
-import { isElement, isTextNode } from './dom-node-safe-guards';
-import { htmlToElement } from './html-to-element';
+import { isElement, isTextNode } from './dom-node-safe-guards.js';
+import { htmlToElement } from './html-to-element.js';
 
 interface Attribute {
     key: string;

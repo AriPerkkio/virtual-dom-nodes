@@ -1,2 +1,2 @@
-export * from './html-to-element';
-export * from './update';
+export * from './html-to-element.js';
+export * from './update.js';

@@ -16,5 +16,15 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'prettier',
     ],
+    overrides: [
+        {
+            files: ['src/**'],
+            plugins: ['import'],
+            rules: {
+                // Require specifying extensions due to https://github.com/microsoft/TypeScript/issues/16577
+                'import/extensions': ['error', 'always'],
+            },
+        },
+    ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
 };
