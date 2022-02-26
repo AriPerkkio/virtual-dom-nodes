@@ -2,12 +2,16 @@
     "name": "virtual-dom-nodes",
     "version": "0.0.3",
     "description": "Apply changes to DOM Elements with minimal work.",
-    "main": "dist/index.js",
+    "author": "Ari Perkkio <ari.perkkio@gmail.com>",
+    "license": "MIT",
+    "type": "module",
+    "exports": "./dist/index.js",
     "files": [
         "dist"
     ],
-    "author": "Ari Perkkio <ari.perkkio@gmail.com>",
-    "license": "MIT",
+    "engines": {
+        "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    },
     "homepage": "https://github.com/AriPerkkio/virtual-dom-nodes",
     "bugs": "https://github.com/AriPerkkio/virtual-dom-nodes",
     "repository": {
@@ -18,7 +22,7 @@
         "prebuild": "rimraf dist",
         "build": "tsc --project tsconfig.prod.json",
         "lint": "eslint . --max-warnings 0 --ext .js,.ts,.tsx",
-        "test": "jest --config test/jest.config.ts",
+        "test": "jest --config test/jest.config.mjs",
         "validate": "yarn build && yarn lint && yarn test"
     },
     "devDependencies": {
@@ -31,7 +35,6 @@
         "eslint-plugin-prettier": "^4.0.0",
         "jest": "^27.5.1",
         "ts-jest": "^27.1.3",
-        "ts-node": "^10.5.0",
         "typescript": "^4.5.5"
     },
     "prettier": {

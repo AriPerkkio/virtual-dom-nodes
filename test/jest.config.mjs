@@ -1,6 +1,5 @@
-import type { InitialOptionsTsJest } from 'ts-jest';
-
-const config: InitialOptionsTsJest = {
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
     testEnvironment: 'jsdom',
     preset: 'ts-jest',
     verbose: true,
