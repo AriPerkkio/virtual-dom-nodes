@@ -19,7 +19,7 @@
         "url": "https://github.com/AriPerkkio/virtual-dom-nodes"
     },
     "scripts": {
-        "prebuild": "rimraf dist",
+        "prebuild": "rm -rf ./dist",
         "build": "tsc --project tsconfig.prod.json",
         "lint": "eslint . --max-warnings 0 --ext .js,.ts,.tsx",
         "test": "jest --config test/jest.config.mjs",
