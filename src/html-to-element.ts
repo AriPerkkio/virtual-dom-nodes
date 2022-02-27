@@ -7,18 +7,18 @@ export function htmlToElement(html: string): Element {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = trimWhitespace(html);
 
-    if (!wrapper.hasChildNodes()) {
-        throw new Error('Expected to have child nodes');
+    if (wrapper.childNodes.length > 1) {
+        // As given html created multiple nodes, we'll just return a div
+        // wrapper with given nodes as children.
+        return wrapper;
     }
 
-    if (wrapper.childElementCount > 1) {
-        throw new Error('Expected to have only a single child');
-    }
-
-    const [element] = wrapper.children;
+    const element = wrapper.firstElementChild;
 
     if (!isElement(element)) {
-        throw new Error('Expected to contain an Element');
+        // As given html did not create an element, we'll just return a div
+        // wrapper with given HTML as innerHTML (= text content).
+        return wrapper;
     }
 
     return element;

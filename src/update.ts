@@ -13,21 +13,20 @@ export function update(
     current: Node,
     nextNodeOrHtml: Node | string | null
 ): void {
-    const nextNode =
-        typeof nextNodeOrHtml === 'string'
-            ? htmlToElement(nextNodeOrHtml)
-            : nextNodeOrHtml;
+    const isString = typeof nextNodeOrHtml === 'string';
 
-    return updateNode(current, nextNode);
-}
-
-function updateNode(current: Node, next: Node | null): void {
-    if (next == null) {
+    if (nextNodeOrHtml == null || (isString && nextNodeOrHtml.length === 0)) {
         // Unmount node, if possible
         current.parentElement?.removeChild(current);
         return;
     }
 
+    const nextNode = isString ? htmlToElement(nextNodeOrHtml) : nextNodeOrHtml;
+
+    return updateNode(current, nextNode);
+}
+
+function updateNode(current: Node, next: Node): void {
     if (shouldUpdateWholeNode(current, next)) {
         // No need to traverse children
         return updateWholeNode(current, next);

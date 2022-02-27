@@ -1,7 +1,7 @@
-export function isElement(node: Node): node is Element {
-    return node.nodeType === Node.ELEMENT_NODE;
+export function isElement(node: Node | null): node is Element {
+    return node != null && node.nodeType === Node.ELEMENT_NODE;
 }
 
-export function isTextNode(node: Node): node is Text {
-    return node.nodeType === Node.TEXT_NODE;
+export function isTextNode(node: Node | null): node is Text {
+    return node != null && node.nodeType === Node.TEXT_NODE;
 }
