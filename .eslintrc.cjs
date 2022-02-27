@@ -25,6 +25,12 @@ module.exports = {
                 'import/extensions': ['error', 'always'],
             },
         },
+        {
+            files: ['test/**'],
+            rules: {
+                '@typescript-eslint/no-non-null-assertion': 'off',
+            },
+        },
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
 };

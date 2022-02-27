@@ -9,7 +9,10 @@ interface Attribute {
 /**
  * Apply changes of `Node` or HTML string to given `Node` optimally.
  */
-export function update(current: Node, nextNodeOrHtml: Node | string): void {
+export function update(
+    current: Node,
+    nextNodeOrHtml: Node | string | null
+): void {
     const nextNode =
         typeof nextNodeOrHtml === 'string'
             ? htmlToElement(nextNodeOrHtml)
@@ -18,7 +21,13 @@ export function update(current: Node, nextNodeOrHtml: Node | string): void {
     return updateNode(current, nextNode);
 }
 
-function updateNode(current: Node, next: Node): void {
+function updateNode(current: Node, next: Node | null): void {
+    if (next == null) {
+        // Unmount node, if possible
+        current.parentElement?.removeChild(current);
+        return;
+    }
+
     if (shouldUpdateWholeNode(current, next)) {
         // No need to traverse children
         return updateWholeNode(current, next);

@@ -16,6 +16,22 @@ test('change root element type', () => {
     );
 });
 
+test('empty', () => {
+    const source = html(`
+        <div>
+            Parent
+            <span id="target">
+                Hello world
+            </span>
+        </div>
+    `);
+    const target = source.querySelector('#target')!;
+
+    update(target, null);
+
+    expect(source.innerHTML).toMatchInlineSnapshot(`"<div>Parent</div>"`);
+});
+
 test('change children element type', () => {
     const source = html(`
         <div>
