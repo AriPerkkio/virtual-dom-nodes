@@ -1,3 +1,5 @@
+import { expect, test, vi } from 'vitest';
+
 import { update } from '../src';
 
 test('basic', () => {
@@ -63,16 +65,16 @@ test('change children element type', () => {
     );
 
     expect(excludeRoot(source)).toMatchInlineSnapshot(`
-<div>
-  <p>
-     Hello world 
-  </p>
-</div>
-`);
+      <div>
+        <p>
+           Hello world 
+        </p>
+      </div>
+    `);
 });
 
 test('change root element attribute', () => {
-    const setAttribute = jest.spyOn(Element.prototype, 'setAttribute');
+    const setAttribute = vi.spyOn(Element.prototype, 'setAttribute');
     const source = html('<div role="status">Hello world</div>');
 
     update(source, html('<div role="alert">Hello world</div>'));

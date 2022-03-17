@@ -1,3 +1,5 @@
+import { expect, test } from 'vitest';
+
 import { htmlToElement } from '../src';
 
 test('basic', () => {
