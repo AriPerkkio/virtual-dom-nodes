@@ -1,6 +1,6 @@
 {
     "name": "virtual-dom-nodes",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Apply changes to DOM Elements with minimal work.",
     "author": "Ari Perkkio <ari.perkkio@gmail.com>",
     "license": "MIT",
