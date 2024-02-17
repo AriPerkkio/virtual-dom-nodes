@@ -15,36 +15,42 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v4
               with:
-                  node-version: '16'
+                  fetch-depth: 0
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '18'
                   registry-url: 'https://registry.npmjs.org'
+
+            - name: Install
+              run: pnpm install
+
+            - name: Build
+              run: pnpm build
+
+            - name: Test
+              run: pnpm test
+
+            - name: Lint
+              run: pnpm lint
 
             - name: Configure github-actions git
               run: |
                   git config --global user.name 'github-actions'
                   git config --global user.email 'github-actions@users.noreply.github.com'
 
-            - name: Install
-              run: yarn install
-
-            - name: Build
-              run: yarn build
-
-            - name: Test
-              run: yarn test
-
-            - name: Lint
-              run: yarn lint
-
             - name: Bump version
-              run: npm version ${{ github.event.inputs.release-type }}
+              run: pnpm version ${{ github.event.inputs.release-type }}
 
             - name: Push release tag
               run: git push origin main --follow-tags
 
             - name: Publish to npm
-              run: npm publish
+              run: pnpm publish --provenance
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
